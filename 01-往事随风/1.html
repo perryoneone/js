@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div{
+
+			width:300px;
+			height:200px;
+			margin:50px auto;
+			background-color: gray;
+		}
+	</style>
+</head>
+<body>
+	<div id="box1"></div>
+	<div id="box2"></div>
+	<script>
+		var box1 = document.getElementById("box1");
+		var box2 = document.getElementById("box2");
+		box1.onmouseenter = function(){
+			box2.style.backgroundColor = "pink";
+		}
+		box1.onmouseleave = function(){
+			box2.style.backgroundColor = "gray";
+		}
+		box2.onmouseenter = function(){
+			box1.style.backgroundColor = "pink";
+		}
+		box2.onmouseleave = function(){
+			box1.style.backgroundColor = "gray";
+		}
+
+	</script>
+</body>
+</html>

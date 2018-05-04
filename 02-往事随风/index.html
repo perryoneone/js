@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟聊天系统</title>
+	<style type="text/css" media="screen">
+		ul,ol{
+			padding: 0;
+			list-style:none;
+		}
+		body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dt,dd{
+			margin: 0;
+		}
+		a{
+			text-decoration:none;
+		}
+		textarea{
+			margin: 0;
+			padding:0;
+		}
+		.wrap{
+			width:500px;
+			margin:20px auto;
+		}
+		#input{
+			width:500px;
+			height:300px;
+            padding:10px;
+			border-radius: 10px;
+			font-size:20px;
+            box-sizing: border-box;
+			resize: none;
+			outline: 0;
+		}
+        .box{
+            height:50px;
+            width:100%;
+            border-bottom: 1px solid rgb(169, 169, 169);
+        }
+        img{
+            float:left;
+            width:40px;
+            height: 40px;
+            border-radius:50%;
+            border:none;
+        }
+		#btn{
+			float:right;
+            width: 70px;
+            height: 30px;
+            margin-top: 10px;
+		}
+		#list{
+			width:100%;
+            margin-top: 10px;
+		}
+		#list li{
+            width:100%;
+            padding:15px 0;
+			line-height: 20px;
+            font-size:18px;
+			border-bottom: 1px dotted #eee;
+		}
+	</style>
+</head>
+<body>
+	<section class="wrap">
+		<textarea id="input"></textarea>
+        <div class="box">
+            <img src="images/1.png" alt="">
+            <button type="submit" id="btn">提交</button>
+        </div>
+		<ul id="list">
+            <li>hello</li>
+		</ul>
+	</section>
+	<script>
+		var input = document.getElementById("input"),
+			submit = document.getElementById("btn"),
+			list = document.getElementById("list");
+		submit.onclick = function() {
+			list.innerHTML += "<li>" + input.value + "</li>";
+			input.value = "";
+        }
+	</script>
+</body>
+</html>

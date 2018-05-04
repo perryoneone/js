@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul{ list-style:none;}
+        *{ margin: 0;padding:0;}
+        a{text-decoration:none;}
+        #wrap{
+            position: relative;
+            width:300px;
+            margin:50px;
+        }
+        .content{
+            width:100%;
+            height:30px;
+        }
+        #input{
+            width:200px;
+            height:30px;
+            padding-left: 10px;
+            vertical-align: middle;
+        }
+        #add{
+            width:34px;
+            height:34px;
+            margin-left: 47px;
+            font-size: 30px;
+            text-align: center;
+            line-height: 34px;
+            vertical-align: middle;
+        }
+        #wrap .select{
+            display: none;
+            position: absolute;
+            top:35px;
+            left:0;
+            height:34px;
+            line-height: 34px;
+        }
+        #wrap div.on{
+            display: block;
+        }
+        .box{
+            width:100%;
+            margin-top: 50px;
+        }
+        .box > li{
+            position: relative;
+            overflow: hidden;
+            height:35px;
+            width:100%;
+            line-height: 35px;
+            border:1px solid #000;
+        }
+        .box > li.active{
+            height:auto;
+        }
+        .box h3{
+            height:35px;
+            width:100%;
+            line-height:35px;
+            text-indent:10px;
+            font-size: 20px;
+            color:#fff;
+            border-bottom:1px solid #000;
+            background-color: skyblue;
+            cursor:pointer;
+        }
+        .box p{
+            width:100%;
+            height:30px;
+            line-height: 30px;
+            border-bottom:1px dotted #000;
+            font-size: 18px;
+            text-indent: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div class="content">
+            <input type="text" id="input" placeholder="请输入：">
+            <button id="add">+</button>
+            <div class="select">
+                <input type="radio" name="list">好友
+                <input type="radio" name="list">同事
+                <input type="radio" name="list">家人
+            </div>
+        </div>
+        <ul class="box">
+            <li>
+                <h3>好友</h3>
+                <p>尼克</p>
+                <p>佩奇</p>
+            </li>
+            <li>
+                <h3>同事</h3>
+                <p>老王</p>
+                <p>小赵</p>
+                <p>狗蛋</p>
+            </li>
+            <li>
+                <h3>家人</h3>
+                <p>二大爷</p>
+                <p>四大姨</p>
+                <p>三大妈</p>
+            </li>
+        </ul>
+    </div>
+    <script>
+        var list = document.getElementsByTagName("li"),
+            contact = document.getElementsByTagName("h3"),
+            oName = document.getElementsByTagName("p"),
+            ipt = document.getElementById("input"),
+            oRadio = document.getElementsByName("list"),
+            add = document.getElementById("add"),
+            selet = document.getElementsByClassName("select")[0];
+
+        function fn(){
+            for(var i = 0,len=contact.length; i < len; i++){
+                contact[i].index = i;
+                contact[i].mark = false;//false代表分组标题收回，true代表展开
+                contact[i].onclick = function () {
+                    if (this.mark){
+                        list[this.index].className = "";
+                        this.mark = false;
+                    }else{
+                        for (var i = 0,len= list.length; i <len; i++){
+                            list[i].className = "";
+                            contact[i].mark = false;
+                        }
+                        list[this.index].className = "active";
+                        this.mark = true;
+                    }
+                }
+            }
+            //给文本添加hover效果
+            for (i = 0,len = oName.length; i < len; i++){
+                oName[i].onmouseenter = function() {
+                    this.style.backgroundColor = "pink";
+                }
+                oName[i].onmouseleave = function() {
+                    this.style.backgroundColor = "#fff";
+                }
+            }
+            //获得输入框的焦点，展开单选框按钮
+            input.onfocus = function () {
+                selet.classList.add("on");
+            }
+        }
+
+        for (var i=0,len=oRadio.length; i < len; i++){
+            fn();
+            oRadio[i].index = i;
+            oRadio[i].onclick = function () {
+                //console.log(this.index);
+                //var str = ipt.value;
+                var flag = this.index;
+                add.onclick = function () {
+                    if (ipt.value !== ""){
+                        //console.log(1);
+                        list[flag].innerHTML += "<p>"+ipt.value+"</p>";
+                        ipt.value = "";
+                        alert("添加成功！");
+                        oRadio[flag].checked = false;
+                        selet.classList.remove("on");
+                    }
+                    else{
+                        alert("value值不能为空！");
+                        oRadio[flag].checked = false;
+                        selet.classList.remove("on");
+                    }
+                    fn();
+                }
+            }
+        }
+        add.onclick = function () {
+            if (ipt.value === ""){
+                alert("value值不能为空！");
+            }
+            ipt.value = "";
+            selet.classList.remove("on");
+        }
+    </script>
+</body>
+</html>
