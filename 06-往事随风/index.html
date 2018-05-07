@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全选功能</title>
+    <style>
+        ul,ol{ padding: 0;list-style:none;}
+        body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dt,dd{ margin: 0;}
+        a{text-decoration:none;}
+        #wrap{
+            width:400px;
+            margin: 50px auto;
+            border:1px solid #ccc;
+            border-radius: 8px;
+            user-select: none;
+        }
+        .list{
+            width:100%;
+            margin-top: 20px;
+        }
+        .list > li{
+            width:100%;
+            height:60px;
+            line-height: 60px;
+            border-bottom: 1px solid #ccc;
+        }
+        #wrap input[type="checkbox"]{
+            display: none;
+        }
+        #wrap label{
+            display:inline-block;
+            width:20px;
+            height:20px;
+            margin-left: 20px;
+            background:url("images/ck.png") 0 0 no-repeat;
+            vertical-align: middle;
+            -webkit-transition:background 0.1s linear;
+        }
+        #wrap input[type="checkbox"]:checked+label{
+            background:url("images/cked.jpg") 0 0 no-repeat;
+        }
+        #wrap span{
+            padding-left: 10px;
+            vertical-align: middle;
+        }
+        .all-select{
+            width:100%;
+            height:80px;
+            line-height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul class="list">
+            <li>
+                <input type="checkbox" id="checkbox1">
+                <label for="checkbox1"></label>
+                <span>Number 01</span>
+            </li>
+            <li>
+                <input type="checkbox" id="checkbox2">
+                <label for="checkbox2"></label>
+                <span>Number 02</span>
+            </li>
+            <li>
+                <input type="checkbox" id="checkbox3">
+                <label for="checkbox3"></label>
+                <span>Number 03</span>
+            </li>
+            <li>
+                <input type="checkbox" id="checkbox4">
+                <label for="checkbox4"></label>
+                <span>Number 04</span>
+            </li>
+            <li>
+                <input type="checkbox" id="checkbox5">
+                <label for="checkbox5"></label>
+                <span>Number 05</span>
+            </li>
+            <li>
+                <input type="checkbox" id="checkbox6">
+                <label for="checkbox6"></label>
+                <span>Number 06</span>
+            </li>
+        </ul>
+        <p class="all-select">
+            <input type="checkbox" id="checkbox">
+            <label for="checkbox"></label>
+            <span>全选</span>
+        </p>
+    </div>
+    <script>
+        var oAllSelect = document.querySelector(".all-select input"),
+            oCheck = document.querySelectorAll(".list li input"),
+            len = oCheck.length;//存储复选框的个数
+
+        oAllSelect.mark = true;//用来标记全选按钮处于什么状态，true表示选中状态
+        oAllSelect.onclick = function () {
+            if (this.mark){
+                for (var i = 0; i < len; i++){
+                    oCheck[i].checked = "checked";
+                    this.mark = false;
+                }
+            }
+            else{
+                for (var i = 0; i < len; i++){
+                    oCheck[i].checked = false;
+                    this.mark = true;
+                }
+            }
+        }
+        //当点击全选按钮时，全部复选框选中，点击任意一个复选框，全选按钮置于未选中状态
+        for (var i = 0; i < len; i++){
+            oCheck[i].index = i;
+            oCheck[i].onclick = function () {
+                //console.log(this.index);
+                oAllSelect.checked = false;
+                oAllSelect.mark = true;
+            }
+        }
+    </script>
+</body>
+</html>

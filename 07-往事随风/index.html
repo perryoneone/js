@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        ul,ol{ padding: 0;list-style:none;}
+        body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dt,dd{ margin: 0;}
+        a{text-decoration:none;}
+        .box{
+            width:500px;
+            margin: 50px auto;
+            padding:20px;
+            border:1px solid #ccc;
+            box-sizing:border-box;
+            user-select: none;
+        }
+        .box > li{
+            display: flex;
+            width:100%;
+            height:59px;
+            border-bottom: 1px solid #ccc;
+            justify-content: space-between;
+        }
+        .box > li span{
+            display: inline-block;
+            width:360px;
+            height:36px;
+            padding-left:10px;
+            margin-top: 12px;
+            line-height: 36px;
+            outline: 0;
+        }
+        .box > li button{
+            display: inline-block;
+            width:50px;
+            height: 36px;
+            margin-top: 12px;
+            border-radius: 8px;
+            border:1px solid #eee;
+            background: transparent linear-gradient(#fff,#ccc);
+            outline: 0;
+            cursor:pointer;
+        }
+        .box > li button.on{
+            color:#fff;
+            background: transparent linear-gradient(#000,#111);
+        }
+    </style>
+</head>
+<body>
+    <ul class="box">
+        <li>
+            <span>hello</span>
+            <button>修改</button>
+        </li>
+        <li>
+            <span>hello</span>
+            <button>修改</button>
+        </li>
+        <li>
+            <span>hello</span>
+            <button>修改</button>
+        </li>
+    </ul>
+    <script>
+        var oBtn = document.getElementsByTagName("button"),
+            oTxt = document.getElementsByTagName("span"),
+            len = oBtn.length;
+
+        for (var i = 0; i < len; i++){
+            oBtn[i].index = i;
+            oBtn[i].mark = true;
+            oBtn[i].onclick = function () {
+                if (this.mark){
+                    for (i = 0; i < len; i++){
+                        oBtn[i].className = "";
+                        oBtn[i].innerText = "修改";
+                        oTxt[i].contentEditable = false;
+                        oBtn[i].mark = true;
+                    }
+                    oBtn[this.index].className = "on";
+                    oBtn[this.index].innerText = "确认";
+                    oTxt[this.index].contentEditable = true;
+                    this.mark = false;
+                }
+                else{
+                    oBtn[this.index].className = "";
+                    oBtn[this.index].innerText = "修改";
+                    oTxt[this.index].contentEditable = false;
+                    this.mark = true;
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

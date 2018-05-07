@@ -7,10 +7,13 @@
         ul{ list-style:none;}
         *{ margin: 0;padding:0;}
         a{text-decoration:none;}
+        body{
+            background-color: #eee;
+        }
         #wrap{
             position: relative;
             width:300px;
-            margin:50px;
+            margin:50px auto;
         }
         .content{
             display:flex;
@@ -21,14 +24,17 @@
             width:200px;
             height:30px;
             padding-left: 10px;
+            border-radius: 5px;
         }
         #add{
-            width:34px;
+            width:50px;
             height:34px;
             font-size: 30px;
-            text-align: center;
-            line-height: 34px;
-            border-radius:50%;
+            border-radius:50px;
+            background:transparent linear-gradient(#31baff,#31baff);
+            border:0;
+            outline: 0;
+            cursor: pointer;
         }
         #wrap .select{
             display: none;
@@ -37,6 +43,8 @@
             left:0;
             height:34px;
             line-height: 34px;
+            color: #fe807c;
+            font-weight: bold;
         }
         #wrap div.on{
             display: block;
@@ -52,6 +60,8 @@
             width:100%;
             line-height: 35px;
             border:1px solid #000;
+            background-color: transparent;
+            transition: height .5s;
         }
         .box > li.active{
             height:auto;
@@ -74,6 +84,7 @@
             border-bottom:1px dotted #000;
             font-size: 18px;
             text-indent: 30px;
+            transition:all .2s;
         }
     </style>
 </head>
@@ -138,7 +149,7 @@
             //给文本添加hover效果
             for (i = 0,len = oName.length; i < len; i++){
                 oName[i].onmouseenter = function() {
-                    this.style.backgroundColor = "pink";
+                    this.style.backgroundColor = "#ff988c";
                 }
                 oName[i].onmouseleave = function() {
                     this.style.backgroundColor = "#fff";
@@ -155,21 +166,18 @@
             oRadio[i].index = i;
             oRadio[i].onclick = function () {
                 //console.log(this.index);
-                //var str = ipt.value;
                 var flag = this.index;
+                //var str = ipt.value;不要这样做，把一个全局变量赋值给一个局部变量
                 add.onclick = function () {
                     if (ipt.value !== ""){
                         //console.log(1);
                         list[flag].innerHTML += "<p>"+ipt.value+"</p>";
                         ipt.value = "";
                         alert("添加成功！");
-                        oRadio[flag].checked = false;
                         selet.classList.remove("on");
                     }
                     else{
                         alert("value值不能为空！");
-                        oRadio[flag].checked = false;
-                        selet.classList.remove("on");
                     }
                     fn();
                 }
@@ -177,11 +185,15 @@
         }
         add.onclick = function () {
             if (ipt.value === ""){
+                //console.log(2);
                 alert("value值不能为空！");
             }
-            ipt.value = "";
-            selet.classList.remove("on");
+            else{
+                //console.log(3);
+                alert("请选择分组！");
+            }
         }
+        //alert(document.getElementsByTagName("*").length);可计算出文档总共有多少个元素节点
     </script>
 </body>
 </html>
