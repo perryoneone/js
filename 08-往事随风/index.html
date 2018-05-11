@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物结算</title>
+    <style>
+        ul,ol,input{ padding: 0;list-style:none;}
+        body,p,h1,h2,h3,h4,h5,h6,ul,ol,dl,dt,dd{ margin: 0;}
+        a{text-decoration:none;}
+        .wrap{
+            width:640px;
+            margin:50px auto;
+        }
+        .wrap ul{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+        .wrap .tit{
+            height:50px;
+            color:#fff;
+            background-color: #CC3366;
+        }
+        .wrap .tit > li{
+            border: 1px solid #c36;
+            border-right: 1px solid #900;
+        }
+        .wrap .list{
+            height:110px;
+            border-bottom: 1px solid #900;
+        }
+        .wrap .list > li:nth-child(1){
+            border-left: 1px solid #CC3366;
+        }
+        .wrap ul > li{
+            text-align: center;
+            line-height: 50px;
+            font-weight: 700;
+            flex: 1 1 auto;
+        }
+        .wrap .list > li{
+            width:160px;
+            height:100%;
+            line-height: 110px;
+            border-right: 1px solid #900;
+            box-sizing: border-box;
+        }
+        .wrap .list li img{
+            width:110px;
+        }
+        .wrap .list li span{
+            color:#f00;
+        }
+        .wrap .list li:nth-child(3){
+            display: flex;
+            padding:0 9px;
+        }
+        .wrap .list li button{
+            width:40px;
+            height:30px;
+            margin-top: 35px;
+            font-size: 20px;
+            cursor:pointer;
+        }
+        .wrap .list li input{
+            width:46px;
+            height:26px;
+            margin: 35px 5px 0 5px;
+            text-align: center;
+        }
+        .wrap .show{
+            float:right;
+            height:50px;
+            width:100%;
+            margin-top: 20px;
+            font-size: 16px;
+            color:#fff;
+            background: #c36;
+        }
+        .wrap .show p{
+            float: right;
+            width:250px;
+            line-height: 50px;
+            text-align: center;
+        }
+        .wrap .show span{
+            color: #ff9;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul class="tit">
+            <li>商品</li>
+            <li>单价</li>
+            <li>数量</li>
+            <li>小计</li>
+        </ul>
+        <ul class="list">
+            <li><img src="images/shop1.jpg" alt=""></li>
+            <li><span class="price">8</span></li>
+            <li>
+                <button class="down">-</button>
+                <input class="input" value="0" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
+                <button class="up">+</button>
+            </li>
+            <li>
+                <span class="total">0</span>
+            </li>
+        </ul>
+        <ul class="list">
+            <li><img src="images/shop2.jpg" alt=""></li>
+            <li><span class="price">10</span></li>
+            <li>
+                <button class="down">-</button>
+                <input class="input" value="0" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
+                <button class="up">+</button>
+            </li>
+            <li>
+                <span class="total">0</span>
+            </li>
+        </ul>
+        <ul class="list">
+            <li><img src="images/shop3.jpg" alt=""></li>
+            <li><span class="price">12.5</span></li>
+            <li>
+                <button class="down">-</button>
+                <input class="input" value="0" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
+                <button class="up">+</button>
+            </li>
+            <li>
+                <span class="total">0</span>
+            </li>
+        </ul>
+        <ul class="list">
+            <li><img src="images/shop4.jpg" alt=""></li>
+            <li><span class="price">23</span></li>
+            <li>
+                <button class="down">-</button>
+                <input class="input" value="0" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
+                <button class="up">+</button>
+            </li>
+            <li>
+                <span class="total">0</span>
+            </li>
+        </ul>
+        <div class="show">
+            <p>合计费用￥&nbsp;&nbsp;<span class="all">0</span>&nbsp;&nbsp;</p>
+            <p>已选中商品:&nbsp;&nbsp;<span class="num">0</span>&nbsp;&nbsp;个</p>
+        </div>
+    </div>
+    <script>
+        var oAdd = document.getElementsByClassName("up"),
+            oDown = document.getElementsByClassName("down"),
+            oIpt = document.getElementsByClassName("input"),
+            oPrice = document.getElementsByClassName("price"),
+            oTotal = document.getElementsByClassName("total"),
+            oNum = document.getElementsByClassName("num")[0],
+            oAll = document.getElementsByClassName("all")[0],
+            len = oIpt.length;
+
+        for (var i = 0; i < len; i++){
+            oAdd[i].index = i;
+            oDown[i].index = i;
+            oIpt[i].index = i;
+            //获取输入框的焦点
+            oIpt[i].onfocus = function () {
+                this.i = oIpt[this.index].value;//存储当前输入框中的值
+                //console.log(this.i);//打印当前输入框中的值
+            };
+            //失去输入框的焦点
+            oIpt[i].onblur = function () {
+                if (this.value === ""){
+                    this.value = 0;
+                }
+                var price = oPrice[this.index].innerText;
+                oTotal[this.index].innerText = price * this.value;//计算小计价钱
+                //console.log(this.i);
+                //console.log(this.value);
+                if(Number(this.value) >= Number(this.i)){//判断是否当前输入框中输入的值大于先前输入框中的值
+                    //console.log(1);
+                    oNum.innerText = oNum.innerText*1 + (this.value - this.i);
+                    oAll.innerText = oAll.innerText*1 + price * (this.value - this.i);
+                    this.i = this.value;//存储当前输入框中的值
+                }else{
+                    oNum.innerText = oNum.innerText*1 - (this.i - this.value);
+                    oAll.innerText = oAll.innerText*1 -  price * (this.i - this.value);
+                    this.i = this.value;//存储当前输入框中的值
+                }
+            };
+            oAdd[i].onclick = function () {
+                //console.log(1);
+                var index = this.index,
+                    value = oIpt[index].value;
+                value++;
+                oIpt[index].value = value;
+                numChange(index);
+            }
+            oDown[i].onclick = function () {
+                //console.log(2);
+                var index = this.index,
+                    value = oIpt[index].value;
+                //value--;
+                if (--value < 0){
+                    value = 0;
+                }
+                oIpt[index].value = value;
+                numChange(index);
+            }
+        }
+        function numChange(index){
+            var num = 0,
+                tot = 0;
+            oTotal[index].innerText = oPrice[index].innerText * oIpt[index].value;
+            for (var i = 0; i < len; i++) {
+                num += oIpt[i].value*1;
+                tot += oTotal[i].innerText*1;
+            }
+            oNum.innerText = num;
+            oAll.innerText = tot;
+        }
+
+        /*var oList1 = document.getElementById("list1"),//获取list1的元素节点
+            oList1_up = oList1.getElementsByClassName("up")[0],//获取加号按钮的元素节点
+            oList1_down = oList1.getElementsByClassName("down")[0],//获取减号按钮的元素节点
+            oList1_ipt = oList1.getElementsByClassName("input")[0],//获取input输入框的元素节点
+            oList1_total = oList1.getElementsByClassName("total")[0],//获取小计的元素节点
+            oList1_price = oList1.getElementsByClassName("price")[0],//获取单价的元素节点
+            oList2 = document.getElementById("list2"),
+            oList2_up = oList2.getElementsByClassName("up")[0],
+            oList2_down = oList2.getElementsByClassName("down")[0],
+            oList2_ipt = oList2.getElementsByClassName("input")[0],
+            oList2_total = oList2.getElementsByClassName("total")[0],
+            oList2_price = oList2.getElementsByClassName("price")[0],
+            oList3 = document.getElementById("list3"),
+            oList3_up = oList3.getElementsByClassName("up")[0],
+            oList3_down = oList3.getElementsByClassName("down")[0],
+            oList3_ipt = oList3.getElementsByClassName("input")[0],
+            oList3_total = oList3.getElementsByClassName("total")[0],
+            oList3_price = oList3.getElementsByClassName("price")[0],
+            oList4 = document.getElementById("list4"),
+            oList4_up = oList4.getElementsByClassName("up")[0],
+            oList4_down = oList4.getElementsByClassName("down")[0],
+            oList4_ipt = oList4.getElementsByClassName("input")[0],
+            oList4_total = oList4.getElementsByClassName("total")[0],
+            oList4_price = oList4.getElementsByClassName("price")[0],
+            oNum = document.getElementsByClassName("num")[0],//获取总数量的元素节点
+            oAll = document.getElementsByClassName("all")[0];//获取总价格的元素节点
+        //list1
+        //鼠标点击加号按钮
+        oList1_up.onclick = function () {
+            oList1_ipt.value++;//当前数量加1
+            oList1.index = oList1_ipt.value;//存储当前输入框中的值
+            //console.log(oList1.index);
+            this.price = Number(oList1_price.innerText);//类型转换
+            oList1_total.innerText = this.price * oList1_ipt.value;//计算小计价钱
+            oNum.innerText++;//总数量加1
+            oAll.innerText = Number(oAll.innerText) + this.price;//总价钱
+        };
+        //鼠标点击减号按钮
+        oList1_down.onclick = function () {
+            if (oList1_ipt.value > 0){//判断当前输入框中的值是否大于0
+                this.price = Number(oList1_price.innerText);//类型转换
+                oList1_ipt.value--;//当前数量减1
+                oList1.index = oList1_ipt.value;//存储当前输入框中的值
+                //console.log(oList1.index);
+                oList1_total.innerText = this.price * oList1_ipt.value;//计算小计价钱
+                oNum.innerText--;//总数量减1
+                oAll.innerText = Number(oAll.innerText) - this.price;//总价钱
+            }
+        };
+        //获取输入框的焦点
+        oList1_ipt.onfocus = function () {
+            oList1.index = oList1_ipt.value;//存储当前输入框中的值
+            //console.log(oList1.index);//打印当前输入框中的值
+        };
+        //失去输入框的焦点
+        oList1_ipt.onblur = function () {
+            this.price = Number(oList1_price.innerText);//类型转换
+            oList1_total.innerText = this.price * this.value;//计算小计价钱
+            //console.log(oList1.index);
+            //console.log(this.value);
+            if(Number(this.value) > oList1.index){//判断是否当前输入框中的值大于先前输入框中的值
+                //console.log(1);
+                oNum.innerText = Number(oNum.innerText) + Number(this.value - oList1.index);
+                oAll.innerText = Number(oAll.innerText) + this.price * (this.value - oList1.index);
+                oList1.index = this.value;//存储当前输入框中的值
+            }else{
+                oNum.innerText = Number(oNum.innerText) - Number(oList1.index - this.value);
+                oAll.innerText = Number(oAll.innerText) - this.price * ( oList1.index - this.value);
+                oList1.index = this.value;//存储当前输入框中的值
+            }
+        };
+        //list2
+        oList2_up.onclick = function () {
+            oList2_ipt.value++;
+            oList2.index = oList2_ipt.value;//存储当前输入框中的值
+            this.price = Number(oList2_price.innerText);
+            oList2_total.innerText = this.price * oList2_ipt.value;
+            oNum.innerText++;
+            oAll.innerText = Number(oAll.innerText) + this.price;
+        };
+        oList2_down.onclick = function () {
+            if (oList2_ipt.value > 0){
+                this.price = Number(oList2_price.innerText);
+                oList2_ipt.value--;
+                oList2.index = oList2_ipt.value;//存储当前输入框中的值
+                oList2_total.innerText = this.price * oList2_ipt.value;
+                oNum.innerText--;
+                oAll.innerText = Number(oAll.innerText) - this.price;
+            }
+        };
+        //获取输入框的焦点
+        oList2_ipt.onfocus = function () {
+            oList2.index = oList2_ipt.value;//存储当前输入框中的值
+        };
+        //失去输入框的焦点
+        oList2_ipt.onblur = function () {
+            this.price = Number(oList2_price.innerText);//类型转换
+            oList2_total.innerText = this.price * this.value;//计算小计价钱
+
+            if(Number(this.value) > oList2.index){//判断是否当前输入框中的值大于先前输入框中的值
+                //console.log(1);
+                oNum.innerText = Number(oNum.innerText) + Number(this.value - oList2.index);
+                oAll.innerText = Number(oAll.innerText) + this.price * (this.value - oList2.index);
+                oList2.index = this.value;//存储当前输入框中的值
+            }else{
+                oNum.innerText = Number(oNum.innerText) - Number(oList2.index - this.value);
+                oAll.innerText = Number(oAll.innerText) - this.price * ( oList2.index - this.value);
+                oList2.index = this.value;//存储当前输入框中的值
+            }
+        };
+        //list3
+        oList3_up.onclick = function () {
+            oList3_ipt.value++;
+            oList3.index = oList3_ipt.value;//存储当前输入框中的值
+            this.price = Number(oList3_price.innerText);
+            oList3_total.innerText = this.price * oList3_ipt.value;
+            oNum.innerText++;
+            oAll.innerText = Number(oAll.innerText) + this.price;
+        };
+        oList3_down.onclick = function () {
+            if (oList3_ipt.value > 0){
+                this.price = Number(oList3_price.innerText);
+                oList3_ipt.value--;
+                oList3.index = oList3_ipt.value;//存储当前输入框中的值
+                oList3_total.innerText = this.price * oList3_ipt.value;
+                oNum.innerText--;
+                oAll.innerText = Number(oAll.innerText) - this.price;
+            }
+        };
+        //获取输入框的焦点
+        oList3_ipt.onfocus = function () {
+            oList3.index = oList3_ipt.value;//存储当前输入框中的值
+        };
+        //失去输入框的焦点
+        oList3_ipt.onblur = function () {
+            this.price = Number(oList3_price.innerText);//类型转换
+            oList3_total.innerText = this.price * this.value;//计算小计价钱
+
+            if(Number(this.value) > oList3.index){//判断是否当前输入框中的值大于先前输入框中的值
+                //console.log(1);
+                oNum.innerText = Number(oNum.innerText) + Number(this.value - oList3.index);
+                oAll.innerText = Number(oAll.innerText) + this.price * (this.value - oList3.index);
+                oList3.index = this.value;//存储当前输入框中的值
+            }else{
+                oNum.innerText = Number(oNum.innerText) - Number(oList3.index - this.value);
+                oAll.innerText = Number(oAll.innerText) - this.price * ( oList3.index - this.value);
+                oList3.index = this.value;//存储当前输入框中的值
+            }
+        };
+        //list4
+        oList4_up.onclick = function () {
+            oList4_ipt.value++;
+            oList4.index = oList4_ipt.value;//存储当前输入框中的值
+            this.price = Number(oList4_price.innerText);
+            oList4_total.innerText = this.price * oList4_ipt.value;
+            oNum.innerText++;
+            oAll.innerText = Number(oAll.innerText) + this.price;
+        };
+        oList4_down.onclick = function () {
+            if (oList4_ipt.value > 0){
+                this.price = Number(oList4_price.innerText);
+                oList4_ipt.value--;
+                oList4_total.innerText = this.price * oList4_ipt.value;
+                oNum.innerText--;
+                oList4.index = oList4_ipt.value;//存储当前输入框中的值
+                oAll.innerText = Number(oAll.innerText) - this.price;
+            }
+        };
+        //获取输入框的焦点
+        oList4_ipt.onfocus = function () {
+            oList4.index = oList4_ipt.value;//存储当前输入框中的值
+        };
+        //失去输入框的焦点
+        oList4_ipt.onblur = function () {
+            this.price = Number(oList4_price.innerText);//类型转换
+            oList4_total.innerText = this.price * this.value;//计算小计价钱
+
+            if(Number(this.value) > oList4.index){//判断是否当前输入框中的值大于先前输入框中的值
+                //console.log(1);
+                oNum.innerText = Number(oNum.innerText) + Number(this.value - oList4.index);
+                oAll.innerText = Number(oAll.innerText) + this.price * (this.value - oList4.index);
+                oList4.index = this.value;//存储当前输入框中的值
+            }else{
+                oNum.innerText = Number(oNum.innerText) - Number(oList4.index - this.value);
+                oAll.innerText = Number(oAll.innerText) - this.price * ( oList4.index - this.value);
+                oList4.index = this.value;//存储当前输入框中的值
+            }
+        };*/
+    </script>
+</body>
+</html>
