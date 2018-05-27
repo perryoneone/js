@@ -95,28 +95,42 @@
             oCheck = document.querySelectorAll(".list li input"),
             len = oCheck.length;//存储复选框的个数
 
-        oAllSelect.mark = true;//用来标记全选按钮处于什么状态，true表示选中状态
+        oAllSelect.mark = false;//用来标记全选按钮处于什么状态，true表示选中状态
         oAllSelect.onclick = function () {
-            if (this.mark){
+            if (!this.mark){
                 for (var i = 0; i < len; i++){
-                    oCheck[i].checked = "checked";
-                    this.mark = false;
+                    oCheck[i].checked = true;
+                    this.mark = true;
+                    console.log(oCheck[i].checked);
                 }
             }
             else{
                 for (var i = 0; i < len; i++){
                     oCheck[i].checked = false;
-                    this.mark = true;
+                    this.mark = false;
+                    console.log(1);
                 }
             }
         }
-        //当点击全选按钮时，全部复选框选中，点击任意一个复选框，全选按钮置于未选中状态
+        //如果全部复选框选中，全选按钮置于选中状态
         for (var i = 0; i < len; i++){
             oCheck[i].index = i;
             oCheck[i].onclick = function () {
-                //console.log(this.index);
-                oAllSelect.checked = false;
-                oAllSelect.mark = true;
+                var all=true;
+                for (var i = 0; i < len; i++){
+                    if(!oCheck[i].checked){
+                        all = false;
+                    }
+                }
+                //在此时all还为true说明全部选中了
+                if(all){
+                    oAllSelect.checked = true;
+                    oAllSelect.mark = true;
+                }else{
+                    oAllSelect.checked = false;
+                    oAllSelect.mark = false;
+                }
+
             }
         }
     </script>
