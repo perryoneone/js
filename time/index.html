@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片时间</title>
+	<style>
+		*{padding:0;margin:0;}
+		.box{
+			width:312px;
+			height:61px;
+			margin:50px auto;
+		}
+		ul > li{
+			float:left;
+			width:41px;
+			height:61px;
+			margin:0 2px;
+			list-style: none;
+		}
+		.sym{
+			width:17px;
+			background: url(images/d.png);
+		}
+		.num0{
+			background: url(images/0.png);
+		}
+		.num1{
+			background: url(images/1.png);
+		}
+		.num2{
+			background: url(images/2.png);
+		}
+		.num3{
+			background: url(images/3.png);
+		}
+		.num4{
+			background: url(images/4.png);
+		}
+		.num5{
+			background: url(images/5.png);
+		}
+		.num6{
+			background: url(images/6.png);
+		}
+		.num7{
+			background: url(images/7.png);
+		}
+		.num8{
+			background: url(images/8.png);
+		}
+		.num9{
+			background: url(images/9.png);
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul>
+			<li class="num0 pic"></li>
+			<li class="num0 pic"></li>
+			<li class="sym"></li>
+			<li class="num0 pic"></li>
+			<li class="num0 pic"></li>
+			<li class="sym"></li>
+			<li class="num0 pic"></li>
+			<li class="num0 pic"></li>
+		</ul>
+	</div>
+	<script>
+		var pics = document.getElementsByClassName("pic");
+
+		setInterval(function(){
+			var date = new Date(),
+				str = timeFormat(date.getHours()) + timeFormat(date.getMinutes()) + timeFormat(date.getSeconds());
+			for (var i = 0; i < str.length; i++){
+				pics[i].className = "pic num" + str[i];
+			}
+		})
+		function timeFormat(t){
+			return t < 10 ? '0' + t : t + '';
+		}
+	</script>
+</body>
+</html>
