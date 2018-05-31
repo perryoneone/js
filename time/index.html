@@ -68,6 +68,33 @@
 	</div>
 	<script>
 		var pics = document.getElementsByClassName("pic");
+		//图片预加载
+		if (document.images) {
+				imgd = new Image();
+				img0 = new Image();
+                img1 = new Image();
+                img2 = new Image();
+                img3 = new Image();
+                img4 = new Image();
+                img5 = new Image();
+                img6 = new Image();
+                img7 = new Image();
+                img8 = new Image();
+                img9 = new Image();
+                
+                
+                imgd.src = "images/d.png"
+                img0.src = "images/0.png"
+                img1.src = "images/1.png";
+                img2.src = "images/2.png";
+                img3.src = "images/3.png";
+                img4.src = "images/4.png";
+                img5.src = "images/5.png";
+                img6.src = "images/6.png";
+                img7.src = "images/7.png";
+                img8.src = "images/8.png";
+                img9.src = "images/9.png";
+            }
 
 		setInterval(function(){
 			var date = new Date(),
