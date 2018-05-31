@@ -303,6 +303,14 @@
 		}
 		window.onresize=resize;
 		resize();
+		if (document.images){
+			img = new Image();
+			img1 = new Image();
+			img2 = new Image();
+			img.src = "images/bg.jpg";
+			img1.src = "images/boy.jpg";
+			img2.src = "images/girl.jpg";
+		}
 
 		var ipt = document.getElementById("input"),
 			submit = document.getElementsByClassName("btn")[0],
