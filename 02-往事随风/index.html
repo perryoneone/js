@@ -206,37 +206,21 @@
 			</div>
 			<div class="content">
 				<ul id="list">
-					<li class="left">
-						<img src="images/boy.jpg" alt="">
-						<p>hdasdhsahd</p>
+					<li class="right">
+						<img src="images/girl.jpg" alt="">
+						<p>在吗？</p>
 					</li>
 					<li class="right">
 						<img src="images/girl.jpg" alt="">
-						<p>hdasdhsahd</p>
+						<p>在吗？</p>
 					</li>
 					<li class="right">
 						<img src="images/girl.jpg" alt="">
-						<p>hdasdhsahd</p>
-					</li>
-					<li class="right">
-						<img src="images/girl.jpg" alt="">
-						<p>hdasdhsahd</p>
-					</li>
-					<li class="right">
-						<img src="images/girl.jpg" alt="">
-						<p>hdasdhsahd</p>
+						<p>在吗？？？</p>
 					</li>
 					<li class="left">
 						<img src="images/boy.jpg" alt="">
-						<p>hdasdhsahd</p>
-					</li>
-					<li class="left">
-						<img src="images/boy.jpg" alt="">
-						<p>hdasdhsahd</p>
-					</li>
-					<li class="left">
-						<img src="images/boy.jpg" alt="">
-						<p>hdasdhsahd</p>
+						<p>干嘛？</p>
 					</li>
 				</ul>
 				<div class="operation">
@@ -303,6 +287,7 @@
 		}
 		window.onresize=resize;
 		resize();
+		//图片预加载
 		if (document.images){
 			img = new Image();
 			img1 = new Image();
@@ -311,7 +296,6 @@
 			img1.src = "images/boy.jpg";
 			img2.src = "images/girl.jpg";
 		}
-
 		var ipt = document.getElementById("input"),
 			submit = document.getElementsByClassName("btn")[0],
 			list = document.getElementById("list"),
@@ -320,9 +304,11 @@
 			oImg = document.getElementById("tit").getElementsByTagName("img"),
 			direction = "right",
 			imgSrc = oImg[0].src;
+
 		function sub(){
 			if (ipt.innerHTML !== "" && ipt.innerHTML !== "无法发送空内容,请输入..."){
 				list.innerHTML += `<li class=${direction}><img src=${imgSrc}><p>${ipt.innerHTML}</p></li>`;
+				list.scrollTop = list.scrollHeight; // 最新发出和收到的信息要显示在最下方,即将滚动条（scrollbar）保持在最底部
 				ipt.innerHTML = "";
 				submit.classList.remove('on');
 				submit.disabled = "disabled";
