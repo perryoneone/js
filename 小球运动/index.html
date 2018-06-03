@@ -4,7 +4,28 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
-	#ball {
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	#wrap{
+		width:300px;
+		height:150px;
+		border:1px solid #ddd;
+		margin: 50px auto;
+		line-height: 150px;
+		text-align: center;
+	}
+	.number{
+		padding-left: 15px;
+		width:200px;
+		height:30px;
+		box-sizing: border-box;
+	}
+	button{
+		height:30px;
+	}
+	.ball {
 		position: absolute;
 		top:0;
 		left:0;
@@ -19,41 +40,77 @@
 	</style>
 </head>
 <body>
-	<div id="ball"></div>
+	<div id="wrap">
+		<input type="number" class="number" placeholder="请输入小球数量：">
+		<button type="button">确定</button>
+	</div>
 	<script type="text/javascript">
 		(function(){
-			var ball = document.getElementById("ball"),
-				speedX = 7,
-				speedY = 7,
-				maxX = document.documentElement.clientWidth - ball.offsetWidth,
-				maxY = document.documentElement.clientHeight - ball.offsetHeight;
-			var startTop = ball.offsetTop,
-				startLeft = ball.offsetLeft;
+			var ipt = document.getElementsByClassName("number")[0],
+				btn = document.getElementsByTagName("button")[0],
+				wrap = document.getElementById("wrap");
 
-			window.onresize = function() {
-				maxX = document.documentElement.clientWidth - ball.offsetWidth;
-				maxY = document.documentElement.clientHeight - ball.offsetHeight;
+			btn.onclick = function() {
+				var val = ipt.value;
+				wrap.style.display = "none";
+				run(val);
 			}
-			run();
-			function run(){
-				startTop += speedY;
-				startLeft += speedX;
+			function run(num){
+				var speed;
+				for (var i = 0; i < num; i++){
+					speed = Math.floor(Math.random()*6+2);
+	    			var div = document.createElement("div");
+	    			div.className = 'ball';
+	    			div.speedY = Math.floor(Math.random()*6+2); // [2,7]
+	    			div.speedX = Math.floor(Math.random()*6+2); 
+	    			document.body.appendChild(div);
+				}
+				var balls = document.getElementsByClassName("ball"),
+					// 限定边界值
+	    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
+	    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
 
-				if (startTop <=0 || startTop >= maxY){
-					speedY = -speedY;
-					startTop = Math.max(0,startTop);
-					startTop = Math.min(maxY,startTop);
-					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
-				}
-				if (startLeft <=0 || startLeft >= maxX){
-					speedX = -speedX;
-					startLeft = Math.max(0,startLeft);
-					startLeft = Math.min(maxX,startLeft);
-					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
-				}
-				ball.style.top = startTop + "px";
-    			ball.style.left = startLeft + "px";
-				requestAnimationFrame(run);
+
+	    		window.onresize = function () {
+	    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
+	    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
+	    		}
+
+
+				play();
+	    		function play(){
+	    			for (var i = 0; i < num; i++) {
+	    				var ball = balls[i],
+	    					startTop = ball.offsetTop,
+	    					startLeft = ball.offsetLeft;
+
+	    					startTop += ball.speedY;
+	    					startLeft += ball.speedX;
+
+	    				if (startTop <= 0 || startTop >= maxY) {
+	    					ball.speedY = -ball.speedY;
+	    					startTop = Math.max(0,startTop);
+	    					startTop = Math.min(maxY,startTop);
+	    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+	    				}
+
+	    				if (startLeft <=0 || startLeft >= maxX) {
+	    					ball.speedX = -ball.speedX;
+	    					startLeft = Math.max(0,startLeft);
+	    					startLeft = Math.min(maxX,startLeft);
+	    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+	    				}
+
+	    				ball.style.top = startTop + "px";
+	    				ball.style.left = startLeft + "px";
+
+	    			}
+
+	    			requestAnimationFrame(play)
+
+
+	    		}
+
 			}
 			function randomColor(){
     			return "rgb("+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +")";
