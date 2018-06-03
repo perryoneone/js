@@ -9,21 +9,25 @@
 		margin: 0;
 	}
 	#wrap{
-		width:300px;
+		width:800px;
 		height:150px;
-		border:1px solid #ddd;
 		margin: 50px auto;
 		line-height: 150px;
 		text-align: center;
 	}
 	.number{
 		padding-left: 15px;
-		width:200px;
-		height:30px;
+		width:400px;
+		height:60px;
 		box-sizing: border-box;
+		font-size:20px;
+		vertical-align: middle;
 	}
 	button{
-		height:30px;
+		height:60px;
+		width:100px;
+		font-size:20px;
+		vertical-align: middle;
 	}
 	.ball {
 		position: absolute;
@@ -41,7 +45,8 @@
 </head>
 <body>
 	<div id="wrap">
-		<input type="number" class="number" placeholder="请输入小球数量：">
+		<input class="number" placeholder="请输入小球数量：" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
 		<button type="button">确定</button>
 	</div>
 	<script type="text/javascript">
@@ -113,7 +118,7 @@
 
 			}
 			function randomColor(){
-    			return "rgb("+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +")";
+    			return "rgb("+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+","+Math.random().toFixed(1)*1+")";
     		}
 
 		}())
