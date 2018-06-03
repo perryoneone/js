@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#circle{
+			position: relative;
+			width:500px;
+			height: 500px;
+			margin: 50px auto;
+			border: 1px solid #f66;
+			border-radius: 50%;
+			box-sizing: border-box;
+		}
+		span{
+			position: absolute;
+			color:#0o0;
+		}
+		.ball{
+			position: absolute;
+			top:0;
+			left:0;
+			width: 10px;
+			height: 10px;
+			margin-top:-5px;
+            margin-left:-5px;
+			border-radius: 50%;
+			background-color: #f00;
+		}
+		.zero{
+			top:-25px;
+			left:240px;
+		}
+		.three{
+			top:240px;
+			right:-15px;
+		}
+		.six{
+			bottom:-25px;
+			left:245px;
+		}
+		.nine{
+			top:240px;
+			left:-15px;
+		}
+	</style>
+</head>
+<body>
+	<div id="circle">
+		<p class="ball"></p>
+		<span class="zero">12</span>
+		<span class="three">3</span>
+		<span class="six">6</span>
+		<span class="nine">9</span>
+	</div>
+	<script>
+		var cir = document.getElementById("circle"),
+			ball = cir.getElementsByClassName("ball")[0],
+			r = parseInt(getComputedStyle(cir).width)/2,
+			deg = 90;
+
+		var num = cir.getElementsByTagName("span");
+		var timer = setInterval(run(),1000);
+		function run(){
+			ball.style.top = r * (1 - Math.sin(deg * Math.PI / 180)) + 'px';
+			ball.style.left = r * (1 + Math.cos(deg * Math.PI / 180)) + 'px';
+			deg -= 6;
+			return run;
+		}
+		document.onclick = function(){
+			clearInterval(timer);
+		}
+		for (var i = 12; i > 0; i--){
+			console.log(i);
+		}
+
+	</script>
+</body>
+</html>

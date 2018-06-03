@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="Anthor" content="FengYu">
+	<title>FengYu</title>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		li{
+			list-style:none;
+		}
+		img{
+			vertical-align: top;
+		}
+		#wrap{
+			position: relative;
+			width: 640px;
+			height: 360px;
+			margin:50px auto;
+			overflow: hidden;
+		}
+		#wrap .pic{
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 1000%;
+		}
+		.pic li{
+			float: left;
+		}
+
+
+		.tab{
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+			margin-left: -100px;
+			width: 150px;
+			height: 30px;
+			padding-left:10px;
+			background: rgba(0,0,0,.2);
+			border-radius: 15px;
+			transition: .5s;
+			transform: scale(.8);
+		}
+		.tab:hover{
+			background: rgba(0,0,0,.5);
+			transform: scale(1.2);
+		}
+		.tab li{
+			width: 20px;
+			height: 20px;
+			float: left;
+			background: #fff;
+			border-radius: 50%;
+			margin: 5px 10px 0 0;
+			opacity: .35;
+			cursor: pointer;
+		}
+		.tab li.on{
+			position: absolute;
+			top: 0px;
+			background: #f60;
+			opacity: 1;
+			z-index: 99;
+		}
+		#wrap>div{
+			position: absolute;
+			top: 50%;
+			margin-top: -30px;
+			width: 30px;
+			height: 60px;
+			background: rgba(0,0,0,.2);
+			text-align: center;
+			font-size: 18px;
+			line-height: 60px;
+			color: #fff;
+			cursor: pointer;
+		}
+		#wrap>div:hover{
+			background: rgba(0,0,0,.5);
+		}
+		.next{
+			right: 0;
+		}
+	</style>
+	<script src="./animation.js"></script>
+</head>
+<body>
+    <div id="wrap">
+    	<ul class="pic">
+    		<li><img src="img/1.png"></li>
+    		<li><img src="img/2.png"></li>
+    		<li><img src="img/3.png"></li>
+    		<li><img src="img/4.png"></li>
+    		<li><img src="img/5.png"></li>
+    		<li><img src="img/1.png"></li>
+    	</ul>
+		<ul class="tab">
+			<li class="on"></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<div class="prev"><</div>
+		<div class="next">></div>
+    </div>
+  	<script>
+  		(function(){
+  			var wrap = document.getElementById("wrap"),
+  				picBox = wrap.getElementsByClassName("pic")[0],
+  				picLi = picBox.querySelectorAll("li"),
+  				tabLi = wrap.querySelectorAll(".tab>li"),
+  				aLiOn = wrap.querySelector(".tab>li.on"),
+  				prev = wrap.getElementsByClassName("prev")[0],
+  				next = wrap.getElementsByClassName("next")[0],
+  				index = 0,
+  				date = new Date();  // 用于判断用户点击间隔时间
+
+
+  			for (var i = 0; i < tabLi.length; i++) {
+  				tabLi[i].index = i-1;
+  				tabLi[i].onclick=function () {
+  					var that = this;
+  					animation(picBox,{
+  						data:{
+  							left: this.index * -640
+  						},
+  						option:{
+  							easing:"Sine",
+  							speed:1
+  						}
+  					},500);
+
+  					if (this.index - index ===1 || this.index - index === -1 ) {
+  						animation(aLiOn,{
+  							data:{
+  								left: 30 * this.index + 10
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:2
+  							}
+  						},500)
+  					}else{
+  						animation(aLiOn,{
+  							data:{
+  								opacity: 0
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:1
+  							}
+  						},250,function(){
+  							this.style.left = that.index  * 30 + 10 + 'px';
+  							animation(this,{
+  								data :{
+  									opacity:1
+  								},
+  								option:{
+  									easing:"Sine",
+  									speed:1
+  								}
+  							},250)
+  						})
+  					}
+  					index= this.index;
+  				}
+  			}
+
+  			// 自动轮播
+  			var timer = setInterval(nextPic,3000);
+  			// 清楚定时器
+  			wrap.onmouseenter = function() {
+  				clearInterval(timer);
+  			}
+  			wrap.onmouseleave = function() {
+  				timer = setInterval(nextPic,3000);
+  			}
+  			// next
+  			next.onclick = nextPic;
+  			function nextPic() {
+  				if (new Date() - date > 500) { //每次点击得时间间隔 > 动画持续时间
+  					index++;
+  					if (index !== picLi.length-1) { // 当前是否到第二张（第一张图片）
+  						animation(aLiOn,{
+  							data:{
+  								left : index * 30 + 10
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:1
+  							}
+  						},500)
+  					}else{
+  						animation(aLiOn,{
+  							data:{
+  								opacity:0
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:1
+  							}
+  						},250,function(){
+  							this.style.left = "10px";
+  							animation(this,{
+  								data:{
+	  								opacity:1
+	  							},
+	  							option:{
+	  								easing:"Sine",
+	  								speed:1
+	  							}
+  							},250)
+  						})
+  					}
+
+  					animation(picBox,{
+  						data : {
+  							left : -640 * index
+  						},
+  						option:{
+  							easing:"Sine",
+  							speed:1
+  						}
+  					},500,function(){
+  						if (index === picLi.length-1) {
+  							this.style.left = 0;
+  							index = 0;
+  						}
+  					});
+  					date = new Date();
+  				}
+  			}
+
+  			// 上一张
+
+  			prev.onclick=function () {
+  				if (new Date()-date > 500) {
+  					if (index === 0) {
+  						picBox.style.left = -(picLi.length-1)*640+"px";
+  						index = picLi.length-1;
+  						animation(aLiOn,{
+  							data:{
+  								opacity:0
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:1
+  							}
+  						},250,function(){
+  							this.style.left = (tabLi.length - 2) * 30 + 10 + "px"
+  							animation(this,{
+  								data:{
+  									opacity:1
+  								},
+  								option:{
+  									easing:"Sine",
+  									speed:1
+  								}
+  							},250)	
+  						})
+  					}
+
+  					index--;
+  					if (index !== picLi.length-2) {
+  						animation(aLiOn,{
+  							data:{
+  								left:30*index + 10
+  							},
+  							option:{
+  								easing:"Sine",
+  								speed:1
+  							}
+  						},500)
+  					}
+  					animation(picBox,{
+  						data:{
+  							left: -640 * index
+  						},
+  						option:{
+  							easing:"Sine",
+  							speed:1
+  						}
+  					},500)
+  					date = new Date();
+  				}
+  			}
+
+  		}())
+
+  	</script>
+</body>
+</html>

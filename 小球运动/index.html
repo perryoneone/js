@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	#ball {
+		position: absolute;
+		top:0;
+		left:0;
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		background: -webkit-linear-gradient(180deg, red, blue); /* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(180deg, red, blue); /* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(180deg, red, blue); /* Firefox 3.6 - 15 */
+		background: linear-gradient(180deg, red, blue); /* 标准的语法 */
+	}
+	</style>
+</head>
+<body>
+	<div id="ball"></div>
+	<script type="text/javascript">
+		(function(){
+			var ball = document.getElementById("ball"),
+				speedX = 7,
+				speedY = 7,
+				maxX = document.documentElement.clientWidth - ball.offsetWidth,
+				maxY = document.documentElement.clientHeight - ball.offsetHeight;
+			var startTop = ball.offsetTop,
+				startLeft = ball.offsetLeft;
+
+			window.onresize = function() {
+				maxX = document.documentElement.clientWidth - ball.offsetWidth;
+				maxY = document.documentElement.clientHeight - ball.offsetHeight;
+			}
+			run();
+			function run(){
+				startTop += speedY;
+				startLeft += speedX;
+
+				if (startTop <=0 || startTop >= maxY){
+					speedY = -speedY;
+					startTop = Math.max(0,startTop);
+					startTop = Math.min(maxY,startTop);
+					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+				}
+				if (startLeft <=0 || startLeft >= maxX){
+					speedX = -speedX;
+					startLeft = Math.max(0,startLeft);
+					startLeft = Math.min(maxX,startLeft);
+					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+				}
+				ball.style.top = startTop + "px";
+    			ball.style.left = startLeft + "px";
+				requestAnimationFrame(run);
+			}
+			function randomColor(){
+    			return "rgb("+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +","+ Math.floor(Math.random()*256) +")";
+    		}
+
+		}())
+		
+	</script>
+</body>
+</html>
