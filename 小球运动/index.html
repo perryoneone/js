@@ -45,84 +45,85 @@
 </head>
 <body>
 	<div id="wrap">
-		<input class="number" placeholder="请输入小球数量：" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+		<input class="number" placeholder="请输入小球数量(1 ~ 20)：" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'')}">
 		<button type="button">确定</button>
-	</div>
-	<script type="text/javascript">
-		(function(){
-			var ipt = document.getElementsByClassName("number")[0],
-				btn = document.getElementsByTagName("button")[0],
-				wrap = document.getElementById("wrap");
+	</div>	
+</body>
+<script type="text/javascript">
+	(function(){
+		var ipt = document.getElementsByClassName("number")[0],
+			btn = document.getElementsByTagName("button")[0],
+			wrap = document.getElementById("wrap"),
+			oFrag = document.createDocumentFragment(); // 创建文档碎片，减少dom操作，优化性能
 
-			btn.onclick = function() {
-				var val = ipt.value;
-				wrap.style.display = "none";
+		btn.onclick = function() {
+			var val = ipt.value;
+			if (val >= 1 && val <= 20){
+				document.body.removeChild(wrap);
 				run(val);
+			}else{
+				alert("请输入正确范围内的数字！");
+				ipt.value = "";
 			}
-			function run(num){
-				var speed;
-				for (var i = 0; i < num; i++){
-					speed = Math.floor(Math.random()*6+2);
-	    			var div = document.createElement("div");
-	    			div.className = 'ball';
-	    			div.speedY = Math.floor(Math.random()*6+2); // [2,7]
-	    			div.speedX = Math.floor(Math.random()*6+2); 
-	    			document.body.appendChild(div);
-				}
-				var balls = document.getElementsByClassName("ball"),
-					// 限定边界值
-	    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
-	    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
+			
+		}
 
-
-	    		window.onresize = function () {
-	    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
-	    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
-	    		}
-
-
-				play();
-	    		function play(){
-	    			for (var i = 0; i < num; i++) {
-	    				var ball = balls[i],
-	    					startTop = ball.offsetTop,
-	    					startLeft = ball.offsetLeft;
-
-	    					startTop += ball.speedY;
-	    					startLeft += ball.speedX;
-
-	    				if (startTop <= 0 || startTop >= maxY) {
-	    					ball.speedY = -ball.speedY;
-	    					startTop = Math.max(0,startTop);
-	    					startTop = Math.min(maxY,startTop);
-	    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
-	    				}
-
-	    				if (startLeft <=0 || startLeft >= maxX) {
-	    					ball.speedX = -ball.speedX;
-	    					startLeft = Math.max(0,startLeft);
-	    					startLeft = Math.min(maxX,startLeft);
-	    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
-	    				}
-
-	    				ball.style.top = startTop + "px";
-	    				ball.style.left = startLeft + "px";
-
-	    			}
-
-	    			requestAnimationFrame(play)
-
-
-	    		}
-
+		function run(num){
+			for (var i = 0; i < num; i++){
+    			var div = document.createElement("div");
+    			div.className = 'ball';
+    			div.speedY = Math.floor(Math.random()*6+2);
+    			div.speedX = Math.floor(Math.random()*6+2); 
+    			oFrag.appendChild(div);
 			}
-			function randomColor(){
-    			return "rgb("+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+")";
+
+			document.body.appendChild(oFrag);
+			var balls = document.getElementsByClassName("ball"),
+				// 限定边界值
+    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
+    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
+
+    		window.onresize = function () {
+    			maxY = document.documentElement.clientHeight - balls[0].offsetHeight,
+    			maxX = document.documentElement.clientWidth - balls[0].offsetWidth;
     		}
 
-		}())
-		
-	</script>
-</body>
+			play();
+    		function play(){
+    			for (var i = 0; i < num; i++) {
+    				var ball = balls[i],
+    					startTop = ball.offsetTop,
+    					startLeft = ball.offsetLeft;
+
+					startTop += ball.speedY;
+					startLeft += ball.speedX;
+    				// 判断Y轴
+    				if (startTop <= 0 || startTop >= maxY) {
+    					ball.speedY = -ball.speedY;
+    					startTop = Math.max(0,startTop);
+    					startTop = Math.min(maxY,startTop);
+    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+    				}
+    				// 判断X轴
+    				if (startLeft <=0 || startLeft >= maxX) {
+    					ball.speedX = -ball.speedX;
+    					startLeft = Math.max(0,startLeft);
+    					startLeft = Math.min(maxX,startLeft);
+    					ball.style.background = "linear-gradient(180deg,"+randomColor()+","+randomColor()+")";
+    				}
+
+    				ball.style.top = startTop + "px";
+    				ball.style.left = startLeft + "px";
+
+    			}
+    			requestAnimationFrame(play);
+    		}
+		}
+		function randomColor(){
+			return "rgb("+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+","+Math.floor(Math.random()*256)+")";
+		}
+	}())
+	
+</script>
 </html>

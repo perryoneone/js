@@ -17,9 +17,25 @@
 			border-radius: 50%;
 			box-sizing: border-box;
 		}
+		ul li{
+			position: absolute;
+		    left: 148px;
+		    top: 0;
+		    -webkit-transform-origin: center 150px;           
+			width:2px;
+			height:7px;
+			background-color: #000;
+
+		}
+
+		ul li:nth-child(5n){
+			width:4px;
+			height:15px;
+
+		}
 		span{
 			position: absolute;
-			color:#0o0;
+			color:#000;
 		}
 		.ball{
 			position: absolute;
@@ -52,6 +68,7 @@
 </head>
 <body>
 	<div id="circle">
+		<ul></ul>
 		<p class="ball"></p>
 		<span class="zero">12</span>
 		<span class="three">3</span>
